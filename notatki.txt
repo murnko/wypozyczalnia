@@ -1,0 +1,33 @@
+ print("\n"+"Iteracja" + str(z))
+    iterate = diff = 0
+    for x in range(M):
+        for y in range(M):
+            if not (policy[x][y] == new_policy[x][y]):
+                iterate = 1
+                diff += 1
+    printer(new_policy)
+    print(diff)
+
+    values_new = {}
+    for xy in przejscia.keys():
+        a = policy[xy]
+        values_tmp = 0
+        for (przejscie, prob) in mozliwe_stany[(xy, a)]:
+            # print(reward[(xy, a, przejscie)])
+            values_tmp += prob * (reward[(xy, a, przejscie)] + values[przejscie])
+        values_new[xy] = 0.9*values_tmp
+    values = values_new
+
+ def psszestrony(mean, threshold, iters=1000):
+    result = []
+    p = exp(-mean)
+    i = 0
+    remaning = 1
+    while p > threshold and i < iters:
+        p *= mean
+        p /= i + 1
+        result.append(p)
+        remaning-=p
+        i += 1
+    result[-1]+=remaning
+    return result
